@@ -1,4 +1,4 @@
-### ReadME
+# README
 ## Note, this repo is not funcitonal in its current form (The JAVA dependencies are not included in the repo). Look for this to be fixed in a future release.
 
 # BigWarp-Landmark-Analysis
