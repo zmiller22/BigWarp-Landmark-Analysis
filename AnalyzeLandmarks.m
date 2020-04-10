@@ -38,10 +38,24 @@ else
     boundaryPath = fullfile(boundaryFolder, boundaryFile);
 end
 
-dims = input('Please enter the x, y, and z pixel dimensions of the moving volume as a Matlab Vector of the form [x,y,z]: ')
-units = input('Please enter the x, y, and z physical dimensions of a voxel in the moving volume as a Matlab Vector of the form [x,y,z]: ')
-units = input('Please enter the x, y, and z physical dimensions of a voxel in the fixed volume as a Matlab Vector of the form [x,y,z]: ')
-        
+%TODO use a dialog box like the one below to get info
+% prompt = {'Please enter the x, y, and z pixel dimensions of the moving volume as a Matlab Vector of the form [x,y,z]: ',
+%     'Please enter the x, y, and z physical dimensions of a voxel in the moving volume as a Matlab Vector of the form [x,y,z]: ',
+%     'Please enter the x, y, and z physical dimensions of a voxel in the fixed volume as a Matlab Vector of the form [x,y,z]: '}
+% 
+% dimensionInfo = inputdlg(prompt', 'Diension Info');
+
+
+    
+dims = input('Please enter the x, y, and z pixel dimensions of the moving volume as a Matlab Vector of the form [x,y,z]: ');
+movingUnits = input('Please enter the x, y, and z physical dimensions of a voxel in the moving volume as a Matlab Vector of the form [x,y,z]: ');
+fixedUnits = input('Please enter the x, y, and z physical dimensions of a voxel in the fixed volume as a Matlab Vector of the form [x,y,z]: ');
+
+dims=movingUnits.*dims;
+% Values for John's stacks
+% dims = [1123, 427, 636]
+% moving (EM) units = [0.43, 0.43, 0.43]
+% fixed (LM) units = [0.6,0.6,0.3525]
 
 %% Read in landmarks
 
@@ -49,18 +63,14 @@ landmarks = Landmarks2Array(landmarksPath);
 movingLandmarks = landmarks(:, 1:3);
 fixedLandmarks = landmarks(:, 4:6);
 
+movingLandmarks = repmat(movingUnits,size(movingLandmarks,1),1).*movingLandmarks;
+fixedLandmarks = repmat(fixedUnits,size(fixedLandmarks,1),1).*fixedLandmarks;
+
 % Convert all units from pixels to physical units
 
 %% Create point lattice
 
-dims = input('Please enter the x, y, and z pixel dimensions of the moving volume as a Matlab Vector of the form [x,y,z]: ')
-units = input('Please enter the x, y, and z physical dimensions of a voxel in the moving volume as a Matlab Vector of the form [x,y,z]: ')
-
-% Values for John's stacks
-%dims=[1123, 427, 636]
-%units=[0.43, 0.43, 0.43]
-
-dims_vec = [0, units(1)*dims(1); 0, units(2)*dims(2); 0, units(3)*dims(3)];
+dims_vec = [0, dims(1); 0, dims(2); 0, dims(3)];
 edgeLength = 10;
 originalLattice = CreatePointLattice(dims_vec, edgeLength);
 
@@ -68,6 +78,8 @@ originalLattice = CreatePointLattice(dims_vec, edgeLength);
 
 if boundaryPath ~= 0
     boundaryPoints = Landmarks2Array(boundaryPath);
+    boundaryPoints = repmat(movingUnits,size(boundaryPoints,1),1).*boundaryPoints(:,1:3);
+       
     a = alphaShape(boundaryPoints(:,1:3));
     in = inShape(a, originalLattice(:,1), originalLattice(:,2), originalLattice(:,3));
 
