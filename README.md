@@ -21,4 +21,11 @@ Once you have selected your landmarks file, you will be promped to select an opt
 * You can select a specifically made boundary point file. Such a file can be made easily in BigWarp by adding many points along the boundary of your region of interest in the moving volume and adding no cooresponding points for the fixed volume. If the boundary of the region of interest is thoroughly saturated, this will cut away the rest of the point lattice such that only the part of the lattice in the region remains.
 * You can use the same file as your landmarks file. Note, however, that if the border of the area you are interested in is not thoroughly saturated with landmarks, this could trim away unexpected parts of the point lattice.
 
+Lastly, you will be prompted to enter two values at the command line. The first is the physical (not pixel) dimensions of your entire moving volume, which should be entered in the same format as a Matlab array. For example, if your moving volume has dimensions 100x200x300 in x, y, and z, you would enter `[100,200,300]`. Lastly, you will be asked to enter an edge length for the point lattice. The edge length specifies the distances between all the points in the evenly spaced initial point lattice. For example, if you are working with microns as your units and you want your point lattice to have spacial resolution of 2 microns, you would enter `2`. Note that the smaller the edge length, the more points in the point lattice and therefore the more time it takes for the program to run. If the program is taking too long, cancel and try running again with a larger edge length.
+
+Once all of the above information has been entered, the program will proceed with the necessary calculations and produce the plots.
+
+# Plots
+## TODO add description and detail on the produced plots
+
 
