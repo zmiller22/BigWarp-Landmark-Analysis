@@ -33,4 +33,6 @@ Once all of the above information has been entered, the program will proceed wit
 This tool is built upon the functionality of this tool:
 https://github.com/saalfeldlab/bigwarp
 
+Many thanks to John Bogovic, who has been extremely helpful in providing all necessary details on BigWarp during the development of this tool.
+
 
