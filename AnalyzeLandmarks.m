@@ -47,13 +47,13 @@ end
 
 
     
-dims = input('Please enter the x, y, and z pixel dimensions of the moving volume as a Matlab Vector of the form [x,y,z]: ');
-movingUnits = input('Please enter the x, y, and z physical dimensions of a voxel in the moving volume as a Matlab Vector of the form [x,y,z]: ');
-fixedUnits = input('Please enter the x, y, and z physical dimensions of a voxel in the fixed volume as a Matlab Vector of the form [x,y,z]: ');
+dims = input('Please enter the x, y, and z physical dimensions of the moving volume as a Matlab Vector of the form [x,y,z]: ');
+% movingUnits = input('Please enter the x, y, and z physical dimensions of a voxel in the moving volume as a Matlab Vector of the form [x,y,z]: ');
+% fixedUnits = input('Please enter the x, y, and z physical dimensions of a voxel in the fixed volume as a Matlab Vector of the form [x,y,z]: ');
 
-dims=movingUnits.*dims;
+%dims=movingUnits.*dims;
 % Values for John's stacks
-% dims = [1123, 427, 636]
+% dims = [482.89, 183.61, 273.48]
 % moving (EM) units = [0.43, 0.43, 0.43]
 % fixed (LM) units = [0.6,0.6,0.3525]
 
@@ -63,8 +63,8 @@ landmarks = Landmarks2Array(landmarksPath);
 movingLandmarks = landmarks(:, 1:3);
 fixedLandmarks = landmarks(:, 4:6);
 
-movingLandmarks = repmat(movingUnits,size(movingLandmarks,1),1).*movingLandmarks;
-fixedLandmarks = repmat(fixedUnits,size(fixedLandmarks,1),1).*fixedLandmarks;
+% movingLandmarks = repmat(movingUnits,size(movingLandmarks,1),1).*movingLandmarks;
+% fixedLandmarks = repmat(fixedUnits,size(fixedLandmarks,1),1).*fixedLandmarks;
 
 % Convert all units from pixels to physical units
 
@@ -78,7 +78,7 @@ originalLattice = CreatePointLattice(dims_vec, edgeLength);
 
 if boundaryPath ~= 0
     boundaryPoints = Landmarks2Array(boundaryPath);
-    boundaryPoints = repmat(movingUnits,size(boundaryPoints,1),1).*boundaryPoints(:,1:3);
+    %boundaryPoints = repmat(movingUnits,size(boundaryPoints,1),1).*boundaryPoints(:,1:3);
        
     a = alphaShape(boundaryPoints(:,1:3));
     in = inShape(a, originalLattice(:,1), originalLattice(:,2), originalLattice(:,3));
@@ -111,12 +111,12 @@ color_max = max(nonlinearLatticeWarpDists);
 caxis([0, color_max]);
 colorbar('ylim', [0,color_max]);
 p.MarkerFaceAlpha = 0.85;
-xlabel('X (pixels)', 'fontname', 'arial', 'fontsize',12)
-ylabel('Y (pixels)','fontname','arial','fontsize',12)
-zlabel('Z (pixels)', 'fontname', 'arial', 'fontsize',12)
+xlabel('X', 'fontname', 'arial', 'fontsize',12)
+ylabel('Y','fontname','arial','fontsize',12)
+zlabel('Z', 'fontname', 'arial', 'fontsize',12)
 set(gca, 'fontname','arial','fontsize',12)
 hold on;
-title('Non-adjusted Lattice Warping');
+title('Non-Linear Lattice Warping');
 view(45,15);
 hold off;
 
@@ -134,7 +134,7 @@ ylabel('Y','fontname','arial','fontsize',12)
 zlabel('Z', 'fontname', 'arial', 'fontsize',12)
 set(gca, 'fontname','arial','fontsize',12)
 hold on;
-title('Non-adjusted Landmark Warping');
+title('Non-Linear Landmark Warping');
 view(45,15);
 hold off;
 
