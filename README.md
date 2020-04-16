@@ -28,4 +28,9 @@ Once all of the above information has been entered, the program will proceed wit
 # Plots
 ## TODO add description and detail on the produced plots
 
+# Agknowledgments
+
+This tool is built upon the functionality of this tool:
+https://github.com/saalfeldlab/bigwarp
+
 
